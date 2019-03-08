@@ -1,3 +1,4 @@
+$taken=0
 def board
   @a = " "
   @b = " "
@@ -32,9 +33,7 @@ def printgame
   puts "  ---|---|---"
   puts "B  #{@d} | #{@e} | #{@f} "
   puts "  ---|---|---"
-  puts "C  #{@g} | #{@h} | #{@i} "
-  check_for_winner
-  
+  puts "C  #{@g} | #{@h} | #{@i} "  
 end
 
 def checkifspotisvalid x
@@ -57,7 +56,7 @@ def turn1
                       "9" => @i}
                     
 
-  puts "Player 1's turn \n Please choose a square:"
+  puts "Player 1's turn 'X' \n Please choose a square:"
   choice1 = gets.chomp.downcase
   choice1_hash.each do |choice, square|
     if choice1 == choice 
@@ -66,11 +65,13 @@ def turn1
 		system "cls"
 		puts "----- Player 1-----"
         printgame
+        $taken+=1
       end
     elsif choice1 == "q" or choice1 == "quit"
       exit
     end
   end
+  check_for_winner
 end
 
 def turn2
@@ -84,7 +85,7 @@ def turn2
                       "8" => @h,
                       "9" => @i}                  
 
-  puts "PLAYER 2's TURN \n Please choose a square:"
+  puts "PLAYER 2's TURN 'O' \n Please choose a square:"
   choice2 = gets.chomp.downcase
   choice2_hash.each do |choice, square|
     if choice2 == choice 
@@ -93,11 +94,13 @@ def turn2
 		system "cls"
 		puts "----- Player 2-----"
         printgame
+        $taken+=1
       end
     elsif choice2 == "q" or choice2 == "quit"
       exit
     end
   end
+  check_for_winner
 end
 
 def check_for_winner 
@@ -110,6 +113,10 @@ def check_for_winner
       exit
     end
   end
+if($taken>=9)
+  puts " you have got a tie"
+  exit
+end
 end
 
 def start_game
