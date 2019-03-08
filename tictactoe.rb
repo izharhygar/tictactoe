@@ -1,38 +1,38 @@
 def board
-  @1 = " "
-  @2 = " "
-  @3 = " "
-  @4 = " "
-  @5 = " "
-  @6 = " "
-  @7 = " "
-  @8 = " "
-  @9 = " "
+  @a = " "
+  @b = " "
+  @c = " "
+  @d = " "
+  @e = " "
+  @f = " "
+  @g = " "
+  @h = " "
+  @i = " "
 end
 
 def spots
-  [@1, @2, @3, @4, @5, @6, @7, @8, @9]
+  [@a, @b, @c, @d, @e, @f, @g, @h, @i]
   
 end
 
 def wins
-  [[@1, @2, @3],
-  [@1, @4, @7],
-  [@1, @5, @9],
-  [@7, @8, @9],
-  [@4, @5, @6],
-  [@7, @5, @3],
-  [@2, @5, @8],
-  [@3, @6, @9]]
+  [[@a, @b, @c],
+  [@a, @d, @g],
+  [@a, @e, @i],
+  [@g, @h, @i],
+  [@d, @e, @f],
+  [@g, @e, @c],
+  [@b, @e, @h],
+  [@c, @f, @i]]
   
 end
 
 def printgame
-  puts "A  #{@1} | #{@2} | #{@3} " 
+  puts "A  #{@a} | #{@b} | #{@c} " 
   puts "  ---|---|---"
-  puts "B  #{@4} | #{@5} | #{@6} "
+  puts "B  #{@d} | #{@e} | #{@f} "
   puts "  ---|---|---"
-  puts "C  #{@7} | #{@8} | #{@9} "
+  puts "C  #{@g} | #{@h} | #{@i} "
   check_for_winner
   
 end
@@ -46,15 +46,15 @@ def checkifspotisvalid x
 end
 
 def turn1
-  choice1_hash = {"1" => @a1,
-                      "2" => @a2,
-                      "3" => @a3,
-                      "4" => @b1,
-                      "5" => @b2,
-                      "6" => @b3,
-                      "7" => @c1,
-                      "8" => @c2,
-                      "9" => @c3}
+  choice1_hash = {"1" => @a,
+                      "2" => @b,
+                      "3" => @c,
+                      "4" => @d,
+                      "5" => @e,
+                      "6" => @f,
+                      "7" => @g,
+                      "8" => @h,
+                      "9" => @i}
                     
 
   puts "Player 1's turn \n Please choose a square:"
@@ -74,16 +74,15 @@ def turn1
 end
 
 def turn2
-  choice2_hash = {"1" => @a1,
-                      "2" => @a2,
-                      "3" => @a3,
-                      "4" => @b1,
-                      "5" => @b2,
-                      "6" => @b3,
-                      "7" => @c1,
-                      "8" => @c2,
-                      "9" => @c3}
-                    
+  choice2_hash = {"1" => @a,
+                      "2" => @b,
+                      "3" => @c,
+                      "4" => @d,
+                      "5" => @e,
+                      "6" => @f,
+                      "7" => @g,
+                      "8" => @h,
+                      "9" => @i}                  
 
   puts "PLAYER 2's TURN \n Please choose a square:"
   choice2 = gets.chomp.downcase
