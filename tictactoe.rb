@@ -50,7 +50,7 @@ def check_if_spot_is_valid x
   if x == " "
     true
   else
-    puts "chose again"
+    false
   end
 end
 
@@ -82,13 +82,16 @@ def player1_turn
     if choice1 == choice 
       if check_if_spot_is_valid(square)
         square.sub!(" ", "X")
-		system "cls"
-		puts "----- Player 1-----"
+	     	system "cls"
+	    	puts "----- Player 1-----"
         game_status
         $taken+=1
+      else 
+        puts "already taken chose some other spot"
+        player1_turn
       end
-    #elsif choice1 == "q" or choice1 == "quit"
-      #exit
+    elsif choice1 == "q" or choice1 == "quit"
+      exit
     end
   end
   check_for_winner
@@ -105,7 +108,7 @@ def player2_turn
                   "8" => @h,
                   "9" => @i}                  
 
- while true
+  while true
     puts "Player 2's turn 'O' \n Please choose a square:"
     choice2 = gets.chomp.downcase
     if (1..9).include?(choice2.to_i)
@@ -124,9 +127,12 @@ def player2_turn
 		puts "----- Player 2-----"
         game_status
         $taken+=1
+      else 
+        puts "already taken chose some other spot"
+        player2_turn
       end
-    #elsif choice2 == "q" or choice2 == "quit"
-      #exit
+    elsif choice2 == "q" or choice2 == "quit"
+      exit
     end
   end
   check_for_winner
