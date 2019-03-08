@@ -1,4 +1,6 @@
 $taken=0
+
+#defining variables for cells
 def board
   @a = " "
   @b = " "
@@ -11,11 +13,15 @@ def board
   @i = " "
 end
 
+
+#taking the empty squares as an array
 def spots
   [@a, @b, @c, @d, @e, @f, @g, @h, @i]
   
 end
 
+
+#all the winning combinations
 def wins
   [[@a, @b, @c],
   [@a, @d, @g],
@@ -28,6 +34,8 @@ def wins
   
 end
 
+
+#method to print the status of the game
 def printgame
   puts "A  #{@a} | #{@b} | #{@c} " 
   puts "  ---|---|---"
@@ -36,6 +44,8 @@ def printgame
   puts "C  #{@g} | #{@h} | #{@i} "  
 end
 
+
+#checking if chosen cell is empty or already filled
 def checkifspotisvalid x
   if x == " "
     true
@@ -44,6 +54,8 @@ def checkifspotisvalid x
   end
 end
 
+
+#method for player 1's turn
 def turn1
   choice1_hash = {"1" => @a,
                       "2" => @b,
@@ -60,6 +72,8 @@ def turn1
     choice1 = gets.chomp.downcase
     if (1..9).include?(choice1.to_i)
       break
+    elsif choice1=="q" || choice1=="quit"
+      exit
     else
       puts "chose in between 1 to 9 only"
     end
@@ -73,8 +87,8 @@ def turn1
         printgame
         $taken+=1
       end
-    elsif choice1 == "q" or choice1 == "quit"
-      exit
+    #elsif choice1 == "q" or choice1 == "quit"
+      #exit
     end
   end
   check_for_winner
@@ -96,6 +110,8 @@ def turn2
     choice2 = gets.chomp.downcase
     if (1..9).include?(choice2.to_i)
       break
+    elsif choice2=="q" || choice2=="quit"
+      exit
     else
       puts "chose in between 1 to 9 only"
     end
@@ -109,8 +125,8 @@ def turn2
         printgame
         $taken+=1
       end
-    elsif choice2 == "q" or choice2 == "quit"
-      exit
+    #elsif choice2 == "q" or choice2 == "quit"
+      #exit
     end
   end
   check_for_winner
