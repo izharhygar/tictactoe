@@ -55,9 +55,15 @@ def turn1
                       "8" => @h,
                       "9" => @i}
                     
-
-  puts "Player 1's turn 'X' \n Please choose a square:"
-  choice1 = gets.chomp.downcase
+  while true
+    puts "Player 1's turn 'X' \n Please choose a square:"
+    choice1 = gets.chomp.downcase
+    if (1..9).include?(choice1.to_i)
+      break
+    else
+      puts "chose in between 1 to 9 only"
+    end
+  end
   choice1_hash.each do |choice, square|
     if choice1 == choice 
       if checkifspotisvalid(square)
@@ -85,8 +91,15 @@ def turn2
                       "8" => @h,
                       "9" => @i}                  
 
-  puts "PLAYER 2's TURN 'O' \n Please choose a square:"
-  choice2 = gets.chomp.downcase
+ while true
+    puts "Player 2's turn 'O' \n Please choose a square:"
+    choice2 = gets.chomp.downcase
+    if (1..9).include?(choice2.to_i)
+      break
+    else
+      puts "chose in between 1 to 9 only"
+    end
+  end
   choice2_hash.each do |choice, square|
     if choice2 == choice 
       if checkifspotisvalid(square)
