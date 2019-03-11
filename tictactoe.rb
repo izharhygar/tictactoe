@@ -47,7 +47,7 @@ class TicTacToe
 #method for player 1's turn
   def player1_turn 
     while true
-      puts "Player 1's turn 'X' \n Please choose a square:"
+      puts "Player 1's turn 'X' \n Please choose a square ( in the form of a matrix cell):"
       row1, col1 = gets.chomp.split(" ")
       if row1=="q" || row1=="quit" || col1=="q" || col1=="quit"
         exit
@@ -55,10 +55,10 @@ class TicTacToe
       row1=number_or_nil(row1)
       col1=number_or_nil(col1)
       #choice1 = @spots[row1][col1]
-      if (0..9).include?(row1) && (0..9).include?(col1)
+      if (0..@size-1).include?(row1) && (0..@size-1).include?(col1)
         break
       else
-        puts "chose in between 1 to 9 only"
+        puts "chose according to the already selected size"
       end
     end
     row1=row1.to_i
@@ -86,17 +86,17 @@ class TicTacToe
 
   def player2_turn                                            #exactly similar function for player 2's turn
     while true
-      puts "Player 2's turn 'X' \n Please choose a square:"
+      puts "Player 2's turn 'X' \n Please choose a square(in the form of a matrix cell):"
       row2, col2 = gets.split(" ")
       if row2=="q" || row2=="quit" || col2=="q" || col2=="quit"
         exit
       end
       row2=number_or_nil(row2)
       col2=number_or_nil(col2)
-      if (0..9).include?(row2) && (0..9).include?(col2)
+      if (0..@size-1).include?(row2) && (0..@size-1).include?(col2)
         break
       else
-        puts "chose in between 1 to 9 only"
+        puts "chose according to the already specified size "
       end
     end 
     if check_if_spot_is_valid(@spots[row2][col2])
