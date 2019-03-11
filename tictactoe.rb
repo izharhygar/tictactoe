@@ -1,174 +1,167 @@
-$taken=0
+# the main class
+class TicTacToe
+  attr_accessor :size
 
-#defining variables for cells
-def board
-  @a = " "
-  @b = " "
-  @c = " "
-  @d = " "
-  @e = " "
-  @f = " "
-  @g = " "
-  @h = " "
-  @i = " "
-end
+  def initialize x=3
+    @size = x
+  end
+  @@taken=0       #to check whether board is on draw/tie if taken = size*size
+ 
+  #@@size=5        #size of the board
+  def arrays
+    @spots =  Array.new(@size){Array.new(@size, " ")}        #actual board specified as a two dimension array
+ 
+    @score = Array.new(2*@size+2,0)                          #an array to check win, it has elements for all rows, columns, diagonals and antidiags
+  end
 
+  #method to print the status of the game
 
-#taking the empty squares as an array
-def spots
-  [@a, @b, @c, @d, @e, @f, @g, @h, @i]
-  
-end
-
-
-#all the winning combinations
-def win_combinations
-  [[@a, @b, @c],
-   [@a, @d, @g],
-   [@a, @e, @i],
-   [@g, @h, @i],
-   [@d, @e, @f],
-   [@g, @e, @c],
-   [@b, @e, @h],
-   [@c, @f, @i]]
-  
-end
-
-
-#method to print the status of the game
-def game_status
-  puts "A  #{@a} | #{@b} | #{@c} " 
-  puts "  ---|---|---"
-  puts "B  #{@d} | #{@e} | #{@f} "
-  puts "  ---|---|---"
-  puts "C  #{@g} | #{@h} | #{@i} "  
-end
+  def game_status
+    for i in 0 ... @size
+      for j in 0 ... @size
+        print "#{@spots[i][j]}  |"
+      end
+      print "\n"
+      for k in 0 ... @spots.size
+        print "---|"
+      end
+      print "\n"
+    end
+  end
 
 
 #checking if chosen cell is empty or already filled
-def check_if_spot_is_valid x
-  if x == " "
-    true
-  else
-    false
+  def check_if_spot_is_valid x
+    if x == " "
+      true
+    else
+      false
+    end
   end
-end
-
+  def number_or_nil(string)
+    Integer(string || '')
+    rescue ArgumentError
+     nil
+  end
 
 #method for player 1's turn
-def player1_turn
-  choice1_hash = {"1" => @a,
-                  "2" => @b,
-                  "3" => @c,
-                  "4" => @d,
-                  "5" => @e,
-                  "6" => @f,
-                  "7" => @g,
-                  "8" => @h,
-                  "9" => @i}
-                    
-  while true
-    puts "Player 1's turn 'X' \n Please choose a square:"
-    choice1 = gets.chomp.downcase
-    if (1..9).include?(choice1.to_i)
-      break
-    elsif choice1=="q" || choice1=="quit"
-      exit
-    else
-      puts "chose in between 1 to 9 only"
-    end
-  end
-  choice1_hash.each do |choice, square|
-    if choice1 == choice 
-      if check_if_spot_is_valid(square)
-        square.sub!(" ", "X")
-	     	system "cls"
-	    	puts "----- Player 1-----"
-        game_status
-        $taken+=1
-      else 
-        puts "already taken chose some other spot"
-        player1_turn
+  def player1_turn 
+    while true
+      puts "Player 1's turn 'X' \n Please choose a square:"
+      row1, col1 = gets.chomp.split(" ")
+      if row1=="q" || row1=="quit" || col1=="q" || col1=="quit"
+        exit
       end
-    elsif choice1 == "q" or choice1 == "quit"
-      exit
-    end
-  end
-  check_for_winner
-end
-
-def player2_turn
-  choice2_hash = {"1" => @a,
-                  "2" => @b,
-                  "3" => @c,
-                  "4" => @d,
-                  "5" => @e,
-                  "6" => @f,
-                  "7" => @g,
-                  "8" => @h,
-                  "9" => @i}                  
-
-  while true
-    puts "Player 2's turn 'O' \n Please choose a square:"
-    choice2 = gets.chomp.downcase
-    if (1..9).include?(choice2.to_i)
-      break
-    elsif choice2=="q" || choice2=="quit"
-      exit
-    else
-      puts "chose in between 1 to 9 only"
-    end
-  end
-  choice2_hash.each do |choice, square|
-    if choice2 == choice 
-      if check_if_spot_is_valid(square)
-        square.sub!(" ", "O")
-		system "cls"
-		puts "----- Player 2-----"
-        game_status
-        $taken+=1
-      else 
-        puts "already taken chose some other spot"
-        player2_turn
+      row1=number_or_nil(row1)
+      col1=number_or_nil(col1)
+      #choice1 = @spots[row1][col1]
+      if (0..9).include?(row1) && (0..9).include?(col1)
+        break
+      else
+        puts "chose in between 1 to 9 only"
       end
-    elsif choice2 == "q" or choice2 == "quit"
+    end
+    row1=row1.to_i
+    col1=col1.to_i
+    if check_if_spot_is_valid(@spots[row1][col1])
+      @spots[row1][col1] = "X"
+      @score[row1]+=1                               #incrementing for the chosen row
+      @score[@size+col1]+=1                        #incrementing for the chosen column
+      if(row1 == col1)                               #incrementing for the chosen diagonal (if only)
+        @score[2*@size]+=1
+      end
+      if(@size-1-col1 == row1)                      #incrementing for the chosen anti diag ( if only)
+        @score[2*@size+1]+=1
+      end
+	    system "cls"
+	    puts "----- Player 1-----"
+      game_status
+      @@taken+=1
+    else 
+      puts "already taken chose some other spot"
+      player1_turn
+    end
+    check_for_winner
+  end
+
+  def player2_turn                                            #exactly similar function for player 2's turn
+    while true
+      puts "Player 2's turn 'X' \n Please choose a square:"
+      row2, col2 = gets.split(" ")
+      if row2=="q" || row2=="quit" || col2=="q" || col2=="quit"
+        exit
+      end
+      row2=number_or_nil(row2)
+      col2=number_or_nil(col2)
+      if (0..9).include?(row2) && (0..9).include?(col2)
+        break
+      else
+        puts "chose in between 1 to 9 only"
+      end
+    end 
+    if check_if_spot_is_valid(@spots[row2][col2])
+      @spots[row2][col2] = "O"
+      @score[row2]+=-1                                   # DECREMENTING IN THIS METHOD ( FOR 'O')
+      @score[@size+col2]+=-1
+      if(row2 == col2)
+        @score[2*@size]+=-1
+      end
+      if(@size-1-col2 == row2)
+        @score[2*@size+1] += -1
+      end
+	    system "cls"
+	    puts "----- Player 2-----"
+      game_status
+      @@taken+=1
+    else 
+      puts "already taken chose some other spot"
+      player2_turn
+    end
+    check_for_winner
+  end
+
+
+  def check_for_winner                                    #method to check for the winner calling it after every move
+    for i in 0 ... @score.size
+      if @score[i] == @size                             #if any element of score array is equal of + size then player 1 wins
+        puts "PLAYER 1 WON"
+        exit 
+      elsif @score[i] == -@size                         #if any element of score array is eqaul to  -size then player 2 wins
+        puts "Player 2 won"
+        exit
+      end
+    end
+    if(@@taken>=@size*@size)                            # this is a logic to check if board is at draw/tie
+      puts " you have got a tie"
       exit
     end
   end
-  check_for_winner
-end
 
-def check_for_winner 
-  win_combinations.each do |y| 
-    if y[0] == "O" && y[1] == "O" && y[2] == "O"
-      puts "Player 2 wins."
-      exit 
-    elsif y[0] == "X" && y[1] == "X" && y[2] == "X"
-      puts "Player 1 wins."
-      exit
+  def start_game
+    puts "TICTACTOE using RUBYish language"
+    puts "To start playing enter your spot. "
+    puts "To quit, enter q at any time"
+  end
+
+  def run_game
+    start_game
+    game_status
+    while true
+      player1_turn
+      player2_turn
     end
   end
-  if($taken>=9)
-    puts " you have got a tie"
-    exit
+end                                                 #class ends
+while true
+  puts "enter the size"
+  size=gets.to_i
+  if size>=3
+    break;
+  else
+    puts "TicTacToe size must be greater than or equal to 3"
   end
 end
-
-def start_game
-  puts "TICTACTOE using RUBYish language"
-  puts "To start playing enter your spot. "
-  puts "To quit, enter q at any time"
-end
-
-def run_game
-  start_game
-  board
-  game_status
-  while true
-    player1_turn
-    player2_turn
-  end
-end
-
-run_game
+t= TicTacToe.new(size)
+t.arrays
+t.run_game
 
