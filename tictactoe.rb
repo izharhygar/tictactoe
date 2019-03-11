@@ -58,7 +58,7 @@ class TicTacToe
       if (0..@size-1).include?(row1) && (0..@size-1).include?(col1)
         break
       else
-        puts "chose according to the already selected size"
+        puts "chose according to the already selected size and must be an integer"
       end
     end
     row1=row1.to_i
@@ -96,7 +96,7 @@ class TicTacToe
       if (0..@size-1).include?(row2) && (0..@size-1).include?(col2)
         break
       else
-        puts "chose according to the already specified size "
+        puts "chose according to the already specified size and must be an integer"
       end
     end 
     if check_if_spot_is_valid(@spots[row2][col2])
