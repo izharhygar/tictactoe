@@ -48,7 +48,7 @@ class Turns < TicTacToe
 
   def player2_turn                                            #exactly similar function for player 2's turn
     while true
-      puts "Player 2's turn 'X' \n Please choose a square(in the form of a matrix cell):"
+      puts "Player 2's turn 'O' \n Please choose a square(in the form of a matrix cell):"
       row2, col2 = gets.split(" ")
       if row2=="q" || row2=="quit" || col2=="q" || col2=="quit"
         exit
